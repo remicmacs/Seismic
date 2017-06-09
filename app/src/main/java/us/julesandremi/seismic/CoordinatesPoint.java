@@ -2,11 +2,13 @@ package us.julesandremi.seismic;
 
 import android.support.design.widget.CoordinatorLayout;
 
+import java.io.Serializable;
+
 /**
  * Created by remicmacs on 08/06/17.
  */
 
-public class CoordinatesPoint {
+public class CoordinatesPoint implements Serializable {
     private float longitude; // [-180 ; 180] degrés E/W (méridien) Positif Est, Négatif Ouest (de Greenwich)
     private float latitude; // [-90; 90] degrés N/S (parallèle) Positif Nord, Négatif Sud (de l'équateur)
     private float depth; // en km [0; 1000]

@@ -1,5 +1,6 @@
 package us.julesandremi.seismic;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -9,7 +10,7 @@ import java.sql.Timestamp;
  * @// TODO: 08/06/17 Ajouter package model avec CoordinatesPoint, Seism, SeismsStream 
  */
 
-public class Seism {
+public class Seism implements Serializable{
     private String title;
     private float mag;
     private String place;

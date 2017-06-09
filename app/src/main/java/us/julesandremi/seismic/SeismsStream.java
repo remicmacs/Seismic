@@ -1,5 +1,6 @@
 package us.julesandremi.seismic;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * Created by remicmacs on 08/06/17.
  */
 
-public class SeismsStream {
+public class SeismsStream implements Serializable {
     private ArrayList<Seism> seisms;
     private Timestamp generated;
     private int count;

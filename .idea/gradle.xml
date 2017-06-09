@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/RSS" />
-            <option value="$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/RSS/app" />
+            <option value="$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/Seismic" />
+            <option value="$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/Seismic/app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

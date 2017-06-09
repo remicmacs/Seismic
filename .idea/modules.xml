@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/RSS/RSS.iml" filepath="$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/RSS/RSS.iml" />
-      <module fileurl="file://$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/RSS/app/app.iml" filepath="$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/RSS/app/app.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/Seismic/Seismic.iml" filepath="$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/Seismic/Seismic.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/Seismic/app/app.iml" filepath="$USER_HOME$/Documents/Remote/Documents/IUT/ASPE/Mobile/Seismic/app/app.iml" />
     </modules>
   </component>
 </project>
