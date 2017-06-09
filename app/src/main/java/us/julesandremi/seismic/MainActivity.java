@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
         listSeism = new ArrayList<Seism>();
         seismAdapter = new CustomAdapter(this, listSeism);
         mListView.setAdapter(seismAdapter);
+        mListView.setOnItemClickListener(seismAdapter);
 
         this.tvTest = (TextView) findViewById(R.id.tvTest);
         fab.setOnClickListener(new View.OnClickListener() {

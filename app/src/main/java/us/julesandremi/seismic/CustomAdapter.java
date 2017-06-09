@@ -2,6 +2,7 @@ package us.julesandremi.seismic;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +93,11 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListen
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
 
-        // Des trucs stylés
+        Intent afficherCarte = new Intent(context, FullscreenMapActivity.class);
+        Seism seism = (Seism) getItem(position);
+        URL url = seism.getUrl();
+        afficherCarte.putExtra("url", url.toString()+"#map");
+        context.startActivity(afficherCarte);
 
     }
 
