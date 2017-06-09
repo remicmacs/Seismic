@@ -10,11 +10,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Timestamp;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
 
 /**
  * Created by remicmacs on 07/06/17.
@@ -111,7 +112,7 @@ public class JsonParser  {
         Timestamp time = new Timestamp(System.currentTimeMillis()); // UTC ?
         //Timestamp updated;
         //int tz;//timezone [-1200;+1200];
-        //String url;
+        String url = "";
         //String type; // earthquake par exemple
         String title = "";
         //String alert; // Niveau d'alerte ["green", "yellow", "orange", "red"] => Gérer avec une Enum ?
@@ -162,6 +163,9 @@ public class JsonParser  {
                             case "tsunami" :
                                 tsunami = (reader.nextInt() == 1 ? true : false);
                                 break;
+                            case "url" :
+                                url = reader.nextString();
+                                break;
                             default:
                                 reader.skipValue();
                         }
@@ -183,6 +187,15 @@ public class JsonParser  {
 
         newSeism = new Seism(title, mag, place, time, id, point);
         newSeism.setTsunami(tsunami);
+
+        if (!"".equals(url)) {
+            try {
+                URL uri = new URL(url);
+                newSeism.setUrl(uri);
+            } catch (MalformedURLException err){
+                Log.d("Erreur : ", err.getMessage()+"\n"+Arrays.toString(err.getStackTrace()));
+            }
+        }
 
         return newSeism;
     }

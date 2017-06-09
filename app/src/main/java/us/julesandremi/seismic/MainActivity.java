@@ -1,5 +1,6 @@
 package us.julesandremi.seismic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -111,5 +112,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void clickSeism(View view) {
+        Intent afficherCarte = new Intent(MainActivity.this, FullscreenMapActivity.class);
+        afficherCarte.putExtra("url", "https://earthquake.usgs.gov/earthquakes/eventpage/usd0008367#map");
+        startActivity(afficherCarte);
     }
 }
