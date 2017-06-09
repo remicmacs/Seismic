@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,6 +34,8 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
     private String address = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
     private TextView tvTest;
     private Context context;
+    private ArrayList<Seism> listSeism;
+    private CustomAdapter seismAdapter;
 
     @Override
     protected void onPreExecute() {
@@ -48,6 +51,8 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
     protected SeismsStream doInBackground(Object... params) {
         this.tvTest = (TextView) params[0];
         this.context = (Context) params[1];
+        listSeism = (ArrayList<Seism>) params[2];
+        seismAdapter = (CustomAdapter) params[3];
 
         JSONObject test;
         SeismsStream stream = null;
@@ -62,6 +67,9 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
             Log.d("Connexion", err.getMessage());
 
         }
+
+        listSeism = stream.getSeisms();
+        seismAdapter.setListSeism(listSeism);
         return stream;
     }
 
@@ -69,8 +77,10 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
     protected void onPostExecute(SeismsStream s) {
         try{
             this.tvTest.setText("Nombre de seismes trouvés : "+s.getCount());
+            seismAdapter.notifyDataSetChanged();
         } catch (Exception err){
             Log.d("Erreur", Arrays.toString(err.getStackTrace()));
         }
+
     }
 }

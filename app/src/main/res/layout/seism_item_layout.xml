@@ -23,14 +23,14 @@
         android:paddingRight="10dp"
         >
 
-        <TextView android:id="@+id/seism_location"
+        <TextView android:id="@+id/seism_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="16sp"
             android:textStyle="bold"
             />
 
-        <TextView android:id="@+id/seism_description"
+        <TextView android:id="@+id/seism_location"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />

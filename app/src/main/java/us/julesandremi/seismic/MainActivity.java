@@ -16,12 +16,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView tvTest;
+    private List listSeism;
+    private ListView mListView;
+    private CustomAdapter seismAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,12 @@ public class MainActivity extends AppCompatActivity
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        mListView = (ListView) findViewById(R.id.seism_list);
+
+        listSeism = new ArrayList<Seism>();
+        seismAdapter = new CustomAdapter(this, listSeism);
+        mListView.setAdapter(seismAdapter);
+
         this.tvTest = (TextView) findViewById(R.id.tvTest);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +53,10 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view, "Chargement ...", Snackbar.LENGTH_LONG).show();
             }
         });
+
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,8 +69,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void asyncJson() {
-        new SeismAsyncTask().execute(this.tvTest, this);
-
+        new SeismAsyncTask().execute(this.tvTest, this, listSeism, seismAdapter);
     }
 
     @Override
