@@ -1,8 +1,12 @@
 package us.julesandremi.seismic;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * Created by remicmacs on 07/06/17.
@@ -11,7 +15,7 @@ import java.sql.Timestamp;
  * @// TODO: 08/06/17 Ajouter package model avec CoordinatesPoint, Seism, SeismsStream 
  */
 
-public class Seism implements Serializable {
+public class Seism implements Serializable, Comparable<Seism> {
     private String title;
     private float mag; //[-1.0; 10.0]
     private String place;
@@ -104,5 +108,30 @@ public class Seism implements Serializable {
 
     public void setUrl(URL url) {
         this.url = url;
+    }
+
+    @Override
+    public int compareTo(@NonNull Seism o) {
+        return ((int)(this.getMag() - o.getMag()));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+
+        Seism autre = (Seism) obj;
+        return (
+                ((Float) this.getMag() ).equals((Float) autre.getMag()) &&
+                        this.getId().equals(autre.getId()) &&
+                        this.getUrl().equals(autre.getUrl()) &&
+                        this.getCoordinates().equals(autre.getCoordinates())
+                );
+    }
+
+    @Override
+    public String toString() {
+        return this.getTitle();
     }
 }
