@@ -1,16 +1,9 @@
 package us.julesandremi.seismic;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
-import android.util.JsonReader;
 import android.util.Log;
-import android.webkit.WebResourceError;
-import android.webkit.WebView;
 import android.widget.TextView;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -19,9 +12,7 @@ import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
-
 import javax.net.ssl.HttpsURLConnection;
 
 /**
@@ -54,7 +45,6 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
         listSeism = (ArrayList<Seism>) params[2];
         seismAdapter = (CustomAdapter) params[3];
 
-        JSONObject test;
         SeismsStream stream = null;
         try {
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
@@ -81,6 +71,5 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
         } catch (Exception err){
             Log.d("Erreur", Arrays.toString(err.getStackTrace()));
         }
-
     }
 }

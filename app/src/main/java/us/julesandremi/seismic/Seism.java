@@ -1,6 +1,7 @@
 package us.julesandremi.seismic;
 
 import java.io.Serializable;
+import java.net.URL;
 import java.sql.Timestamp;
 
 /**
@@ -19,6 +20,7 @@ public class Seism implements Serializable {
     private String [] ids;
     private boolean tsunami;
     private CoordinatesPoint coordinates;
+    private URL url;
 
     public Seism(String title, float mag, String place, Timestamp time, String id, CoordinatesPoint coordinates) {
         this.setTitle(title);
@@ -94,5 +96,13 @@ public class Seism implements Serializable {
     public void setMag(float mag) {
         if (mag < -1 || mag > 10) throw new IllegalArgumentException("Magnitude value out of bonds");
         this.mag = mag;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
     }
 }
