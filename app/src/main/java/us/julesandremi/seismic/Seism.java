@@ -10,9 +10,9 @@ import java.sql.Timestamp;
  * @// TODO: 08/06/17 Ajouter package model avec CoordinatesPoint, Seism, SeismsStream 
  */
 
-public class Seism implements Serializable{
+public class Seism implements Serializable {
     private String title;
-    private float mag;
+    private float mag; //[-1.0; 10.0]
     private String place;
     private Timestamp time;
     private String id;
