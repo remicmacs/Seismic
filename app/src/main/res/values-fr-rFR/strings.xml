@@ -11,7 +11,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <string name="title_activity_fullscreen_map">FullscreenMapActivity</string>
+    <string name="title_activity_fullscreen_map">Lieu du séisme</string>
     <string name="Loading">Chargement des séismes ...</string>
     <string name="founded_seisms">%d séismes trouvés !</string>
 </resources>

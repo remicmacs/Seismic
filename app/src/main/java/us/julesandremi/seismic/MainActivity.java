@@ -6,6 +6,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static us.julesandremi.seismic.R.id.fab;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private List listSeism;
+    private boolean ascendSorted = false;
     private ListView mListView;
     private CustomAdapter seismAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity
 
         mListView = (ListView) findViewById(R.id.seism_list);
 
-        listSeism = new ArrayList<Seism>();
+        listSeism = new ArrayList<>();
         seismAdapter = new CustomAdapter(this, listSeism);
         mListView.setAdapter(seismAdapter);
         mListView.setOnItemClickListener(seismAdapter);
@@ -75,7 +80,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.this.asyncJson();
+                MainActivity.this.sortSeisms();
+                Log.d("Tri", "Tri fait");
             }
         });
 
@@ -96,6 +102,7 @@ public class MainActivity extends AppCompatActivity
     private void asyncJson() {
         Snackbar.make(fab, R.string.Loading, Snackbar.LENGTH_LONG).show();
         new SeismAsyncTask().execute(this, this.listSeism, this.seismAdapter, this.swipeRefreshLayout);
+        this.ascendSorted = true;
     }
 
     @Override
@@ -155,9 +162,38 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void clickSeism(View view) {
+    /*public void clickSeism(View view) {
         Intent afficherCarte = new Intent(MainActivity.this, FullscreenMapActivity.class);
         afficherCarte.putExtra("url", "https://earthquake.usgs.gov/earthquakes/eventpage/usd0008367#map");
         startActivity(afficherCarte);
+    }*/
+
+    /**
+     * @// TODO: 20/06/17 Remplacer le symbole du bouton flottant par une flèche qui change de sens suivant le mode de tri
+     */
+    public void sortSeisms(){
+        if (this.ascendSorted) {
+            this.sortSeisms("decroissant");
+        } else {
+            this.sortSeisms("croissant");
+        }
+    }
+    public void sortSeisms(String key){
+        key = (key == null ? "croissant" : key);
+        ArrayList <Seism> seismList = (ArrayList) this.seismAdapter.getListSeism();
+        Collections.sort(seismList);
+
+        switch (key){
+            case "croissant":
+                if (!this.ascendSorted) Collections.reverse(listSeism);
+                this.ascendSorted = true;
+                break;
+            case "decroissant":
+                Collections.reverse(seismList);
+                this.ascendSorted = false;
+                break;
+        }
+        this.seismAdapter.setListSeism(seismList);
+        this.seismAdapter.notifyDataSetChanged();
     }
 }

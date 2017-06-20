@@ -110,9 +110,17 @@ public class Seism implements Serializable, Comparable<Seism> {
         this.url = url;
     }
 
+    /**
+     * Trie d'abord par magnitude puis par ancienneté
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(@NonNull Seism o) {
-        return ((int)(this.getMag() - o.getMag()));
+        int result = this.getMag() > o.getMag() ? 1 : this.getMag() < o.getMag() ? -1 : 0 ;
+        if (result == 0) result = this.getTime().before(o.getTime()) ? 1 : this.getTime().after(o.getTime()) ? -1 : 0 ;
+
+        return result;
     }
 
     @Override

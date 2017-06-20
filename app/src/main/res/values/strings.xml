@@ -10,7 +10,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <string name="title_activity_fullscreen_map">FullscreenMapActivity</string>
+    <string name="title_activity_fullscreen_map">Seism location</string>
     <string name="Loading">Loading seisms ...</string>
     <string name="founded_seisms">%d seisms found !</string>
 </resources>

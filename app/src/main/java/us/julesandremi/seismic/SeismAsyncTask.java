@@ -12,6 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -60,6 +62,7 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
         }
 
         listSeism = stream.getSeisms();
+        Collections.sort(listSeism);
         seismAdapter.setListSeism(listSeism);
         return stream;
     }

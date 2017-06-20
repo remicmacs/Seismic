@@ -40,6 +40,10 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListen
         this.listSeism = listSeism;
     }
 
+    public List <Seism> getListSeism(){
+        return this.listSeism;
+    }
+
     @Override
 
     public Object getItem(int position) {
