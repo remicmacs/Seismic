@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,22 +24,29 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static us.julesandremi.seismic.R.id.fab;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView tvTest;
     private List listSeism;
     private ListView mListView;
     private CustomAdapter seismAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Toujours en premier
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         mListView = (ListView) findViewById(R.id.seism_list);
 
@@ -47,12 +55,27 @@ public class MainActivity extends AppCompatActivity
         mListView.setAdapter(seismAdapter);
         mListView.setOnItemClickListener(seismAdapter);
 
-        this.tvTest = (TextView) findViewById(R.id.tvTest);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh() {
+                MainActivity.this.asyncJson();
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        this.asyncJson();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MainActivity.this.asyncJson();
-                Snackbar.make(view, "Chargement ...", Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -71,7 +94,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void asyncJson() {
-        new SeismAsyncTask().execute(this.tvTest, this, listSeism, seismAdapter);
+        Snackbar.make(fab, R.string.Loading, Snackbar.LENGTH_LONG).show();
+        new SeismAsyncTask().execute(this, this.listSeism, this.seismAdapter, this.swipeRefreshLayout);
     }
 
     @Override

@@ -2,12 +2,18 @@ package us.julesandremi.seismic;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.StringTokenizer;
+
 import javax.net.ssl.HttpsURLConnection;
 
 /**
@@ -18,10 +24,10 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
 
     private URL url ;
     private String address = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
-    private TextView tvTest;
     private Context context;
     private ArrayList<Seism> listSeism;
     private CustomAdapter seismAdapter;
+    private SwipeRefreshLayout swipeRefreshLayoutFromMain;
 
     @Override
     protected void onPreExecute() {
@@ -35,10 +41,10 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
 
     @Override
     protected SeismsStream doInBackground(Object... params) {
-        this.tvTest = (TextView) params[0];
-        this.context = (Context) params[1];
-        listSeism = (ArrayList<Seism>) params[2];
-        seismAdapter = (CustomAdapter) params[3];
+        this.context = (Context) params[0];
+        listSeism = (ArrayList<Seism>) params[1];
+        seismAdapter = (CustomAdapter) params[2];
+        this.swipeRefreshLayoutFromMain = (SwipeRefreshLayout) params[3];
 
         SeismsStream stream = null;
         try {
@@ -61,8 +67,9 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
     @Override
     protected void onPostExecute(SeismsStream s) {
         try{
-            this.tvTest.setText("Nombre de seismes trouvés : "+s.getCount());
+            Snackbar.make(this.swipeRefreshLayoutFromMain, String.format(this.context.getResources().getString(R.string.founded_seisms), s.getCount()), Snackbar.LENGTH_LONG).show();
             seismAdapter.notifyDataSetChanged();
+            swipeRefreshLayoutFromMain.setRefreshing(false);
         } catch (Exception err){
             Log.d("Erreur", Arrays.toString(err.getStackTrace()));
         }

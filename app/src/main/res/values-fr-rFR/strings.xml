@@ -1,16 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Seismic</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Paramètres</string>
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_fullscreen_map">FullscreenMapActivity</string>
-    <string name="Loading">Loading seisms ...</string>
-    <string name="founded_seisms">%d seisms found !</string>
+    <string name="Loading">Chargement des séismes ...</string>
+    <string name="founded_seisms">%d séismes trouvés !</string>
 </resources>
