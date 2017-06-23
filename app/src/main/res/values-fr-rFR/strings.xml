@@ -14,4 +14,12 @@
     <string name="title_activity_fullscreen_map">Lieu du séisme</string>
     <string name="Loading">Chargement des séismes ...</string>
     <string name="founded_seisms">%d séismes trouvés !</string>
+    <string name="action_sort_mag">Sort by magnitude</string>
+    <string name="action_sort_time">Sort by date</string>
+    <string name="action_sort_mag_min">Sort by mag.</string>
+    <string name="action_sort_time_min">Sort by dat.</string>
+    <string name="action_sort_mag_descend">Sort by magnitude descending</string>
+    <string name="action_sort_mag_descend_min">Sort by mag. desc.</string>
+    <string name="action_sort_time_desc">Sort by date descending</string>
+    <string name="action_sort_time_desc_min">Sort by date desc.</string>
 </resources>

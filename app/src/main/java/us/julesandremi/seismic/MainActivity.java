@@ -28,11 +28,12 @@ public class MainActivity extends AppCompatActivity
 
     private List listSeism;
     private boolean magAscendSorted = false;
+    private boolean timeAscendSorted = false;
+    private boolean magSorted = false;
     private ListView mListView;
     private CustomAdapter seismAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton fab;
-    private boolean timeAscendSorted = false;
 
 
     @Override
@@ -71,14 +72,9 @@ public class MainActivity extends AppCompatActivity
 
         this.asyncJson();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.this.sortSeisms();
-                Log.d("Tri", "Tri fait");
-            }
-        });
-
+        ArrayList <Seism> seismList = (ArrayList) this.seismAdapter.getListSeism();
+        Collections.sort(seismList);
+        this.magSorted = true;
 
 
 
@@ -130,6 +126,18 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_sort_mag) {
+            if (this.magAscendSorted) {
+                this.sortSeisms("magDescend", item);
+            } else {
+                this.sortSeisms("magAscend", item);
+            }
+        } else if (id == R.id.action_sort_time) {
+            if (this.timeAscendSorted) {
+                this.sortSeisms("timeDescend", item);
+            } else {
+                this.sortSeisms("timeAscend", item);
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -153,8 +161,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
-        } else if (id == R.id.sort_time) {
-            this.sortSeisms("timeAscend");
         } else if (id == R.id.source_all) {
             this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
             // Changer les titres intitulés ou symboles pour la lisibilité de la source utilisée
@@ -171,35 +177,27 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /*public void clickSeism(View view) {
-        Intent afficherCarte = new Intent(MainActivity.this, FullscreenMapActivity.class);
-        afficherCarte.putExtra("url", "https://earthquake.usgs.gov/earthquakes/eventpage/usd0008367#map");
-        startActivity(afficherCarte);
-    }*/
 
-    /**
-     * @// TODO: 20/06/17 Remplacer le symbole du bouton flottant par une flèche qui change de sens suivant le mode de tri
-     */
-    public void sortSeisms(){
-        if (this.magAscendSorted) {
-            this.sortSeisms("magDescend");
-        } else {
-            this.sortSeisms("magAscend");
-        }
-    }
-    public void sortSeisms(String key){
-        key = (key == null ? "croissant" : key);
+    public void sortSeisms(String key, MenuItem item){
         ArrayList <Seism> seismList = (ArrayList) this.seismAdapter.getListSeism();
-        Collections.sort(seismList);
+
 
         switch (key){
             case "magAscend":
-                if (!this.magAscendSorted) Collections.reverse(listSeism);
+                Collections.sort(seismList);
+                item.setTitle(getResources().getString(R.string.action_sort_mag_descend));
+                item.setTitleCondensed(getResources().getString(R.string.action_sort_mag_descend_min));
                 this.magAscendSorted = true;
+                this.magSorted = true;
+
                 break;
             case "magDescend":
+                if (! this.magAscendSorted) Collections.sort(seismList);
                 Collections.reverse(seismList);
+                item.setTitle(getResources().getString(R.string.action_sort_mag));
+                item.setTitleCondensed(getResources().getString(R.string.action_sort_mag_min));
                 this.magAscendSorted = false;
+                this.magSorted = true;
                 break;
             case "timeAscend":
                 Collections.sort(seismList, new Comparator<Seism>() {
@@ -210,10 +208,12 @@ public class MainActivity extends AppCompatActivity
                         }
                     });
                 this.timeAscendSorted = true;
-                this.magAscendSorted = false;
+                this.magSorted = false;
+                item.setTitle(getResources().getString(R.string.action_sort_time_desc));
+                item.setTitleCondensed(getResources().getString(R.string.action_sort_time_desc_min));
                 break;
             case "timeDescend":
-                if (!this.magAscendSorted)
+                if (!this.timeAscendSorted) {
                     Collections.sort(seismList, new Comparator<Seism>() {
                         @Override
                         public int compare(Seism o1, Seism o2) {
@@ -221,10 +221,13 @@ public class MainActivity extends AppCompatActivity
                             return result;
                         }
                     });
+                }
                 Collections.reverse(seismList);
 
                 this.timeAscendSorted = false;
-                this.magAscendSorted = false;
+                this.magSorted = false;
+                item.setTitle(getResources().getString(R.string.action_sort_time));
+                item.setTitleCondensed(getResources().getString(R.string.action_sort_time_min));
                 break;
 
         }

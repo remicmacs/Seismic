@@ -3,4 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_settings" android:orderInCategory="100"
         android:title="@string/action_settings" app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sort_mag"
+        android:orderInCategory="1"
+        android:title="@string/action_sort_mag"
+        android:titleCondensed="@string/action_sort_mag_min"
+        />
+    <item
+        android:id="@+id/action_sort_time"
+        android:orderInCategory="1"
+        android:title="@string/action_sort_time"
+        android:titleCondensed="@string/action_sort_time_min"
+        />
 </menu>
