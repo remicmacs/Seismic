@@ -2,8 +2,10 @@ package us.julesandremi.seismic;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -56,7 +59,7 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListen
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         MyViewHolder mViewHolder = null;
 
         if (convertView == null) {
@@ -80,11 +83,41 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListen
 
         Seism seism = (Seism) getItem(position);
 
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                displayDetail(position);
+                return false;
+            }
+        });
+
         mViewHolder.textTitle.setText(seism.getTitle());
         mViewHolder.textLocation.setText(seism.getPlace());
         mViewHolder.imageView.setImageResource(R.drawable.ic_tsunami);
 
         return convertView;
+    }
+
+    private void displayDetail(int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        //Log.d("Listener", "OnItemLongClick");
+
+        Seism seism = (Seism) getItem(position);
+
+        //Toast.makeText(context, String.format("Long click on item n°%d",position),
+                //Toast.LENGTH_LONG
+        // ).show();
+
+        builder.setTitle("Détails du séisme")
+                .setMessage(seism.toString())
+                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+
+        builder.create().show();
+
     }
 
     private class MyViewHolder {
@@ -97,12 +130,12 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListen
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
 
+        Log.d("Listener", "OnItemClick");
         Intent afficherCarte = new Intent(context, FullscreenMapActivity.class);
         Seism seism = (Seism) getItem(position);
         URL url = seism.getUrl();
         afficherCarte.putExtra("url", url.toString()+"#map");
         context.startActivity(afficherCarte);
-
     }
 
 }

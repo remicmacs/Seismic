@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -140,6 +141,6 @@ public class Seism implements Serializable, Comparable<Seism> {
 
     @Override
     public String toString() {
-        return this.getTitle();
+        return this.getTitle()+" Date : "+(new Date(this.getTime().getTime()));
     }
 }
