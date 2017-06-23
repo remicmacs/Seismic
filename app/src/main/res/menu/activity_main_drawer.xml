@@ -20,5 +20,15 @@
                 android:title="Send" />
         </menu>
     </item>
+    <item android:title="Sources">
+        <menu>
+            <item android:id="@+id/source_all" android:icon="@drawable/ic_menu_share"
+                android:title="Fetch all" />
+            <item android:id="@+id/source_medium" android:icon="@drawable/ic_menu_send"
+                android:title="Fetch from medium" />
+            <item android:id="@+id/sort_time" android:icon="@drawable/ic_menu_manage"
+                android:title="Sort by time" />
+        </menu>
+    </item>
 
 </menu>

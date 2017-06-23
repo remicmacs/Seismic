@@ -49,7 +49,7 @@ public class CoordinatesPoint implements Serializable {
     }
 
     public void setDepth(float depth) {
-        if (depth < 0 || depth > 1000) throw new IllegalArgumentException("Depth of point exceded");
+        if (depth < -1000 ||depth > 1000) throw new IllegalArgumentException("Depth of point exceded");
         this.depth = depth;
     }
 

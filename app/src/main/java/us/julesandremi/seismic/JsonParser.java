@@ -95,7 +95,7 @@ public class JsonParser  {
     }
 
     private ArrayList<Seism> readSeismArray() throws IOException {
-        ArrayList<Seism> listSeisms = new ArrayList<>(50);
+        ArrayList<Seism> listSeisms = new ArrayList<>();
         reader.beginArray();
         while (reader.hasNext()){
             listSeisms.add(this.readSeism());
@@ -229,7 +229,9 @@ public class JsonParser  {
         }
         reader.endObject();
 
-        return new CoordinatesPoint(latitude, longitude, depth);
+        CoordinatesPoint coordinatesPoint = new CoordinatesPoint(latitude, longitude, depth);
+
+        return coordinatesPoint;
 
     }
 }

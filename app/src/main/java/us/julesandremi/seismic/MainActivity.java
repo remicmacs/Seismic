@@ -1,13 +1,10 @@
 package us.julesandremi.seismic;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,28 +14,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-
-import static us.julesandremi.seismic.R.id.fab;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
+
     private List listSeism;
-    private boolean ascendSorted = false;
+    private boolean magAscendSorted = false;
     private ListView mListView;
     private CustomAdapter seismAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton fab;
+    private boolean timeAscendSorted = false;
 
 
     @Override
@@ -100,9 +94,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void asyncJson() {
+        this.asyncJson(this.defaultAddress);
+    }
+
+    private void asyncJson(String url){
         Snackbar.make(fab, R.string.Loading, Snackbar.LENGTH_LONG).show();
-        new SeismAsyncTask().execute(this, this.listSeism, this.seismAdapter, this.swipeRefreshLayout);
-        this.ascendSorted = true;
+        new SeismAsyncTask().execute(this, this.listSeism, this.seismAdapter, this.swipeRefreshLayout, url);
+        this.magAscendSorted = true;
     }
 
     @Override
@@ -155,6 +153,17 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.sort_time) {
+            this.sortSeisms("timeAscend");
+        } else if (id == R.id.source_all) {
+            this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+            // Changer les titres intitulés ou symboles pour la lisibilité de la source utilisée
+            this.asyncJson();
+
+        } else if (id == R.id.source_medium) {
+            this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson";
+            // Changer les titres intitulés ou symboles pour la lisibilité de la source utilisée
+            this.asyncJson();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -172,10 +181,10 @@ public class MainActivity extends AppCompatActivity
      * @// TODO: 20/06/17 Remplacer le symbole du bouton flottant par une flèche qui change de sens suivant le mode de tri
      */
     public void sortSeisms(){
-        if (this.ascendSorted) {
-            this.sortSeisms("decroissant");
+        if (this.magAscendSorted) {
+            this.sortSeisms("magDescend");
         } else {
-            this.sortSeisms("croissant");
+            this.sortSeisms("magAscend");
         }
     }
     public void sortSeisms(String key){
@@ -184,14 +193,40 @@ public class MainActivity extends AppCompatActivity
         Collections.sort(seismList);
 
         switch (key){
-            case "croissant":
-                if (!this.ascendSorted) Collections.reverse(listSeism);
-                this.ascendSorted = true;
+            case "magAscend":
+                if (!this.magAscendSorted) Collections.reverse(listSeism);
+                this.magAscendSorted = true;
                 break;
-            case "decroissant":
+            case "magDescend":
                 Collections.reverse(seismList);
-                this.ascendSorted = false;
+                this.magAscendSorted = false;
                 break;
+            case "timeAscend":
+                Collections.sort(listSeism, new Comparator<Seism>() {
+                    @Override
+                    public int compare(Seism o1, Seism o2) {
+                        int result = o1.getTime().before(o2.getTime()) ? 1 : o1.getTime().after(o2.getTime()) ? -1 : 0 ;
+                        return result;
+                        }
+                    });
+                this.timeAscendSorted = true;
+                this.magAscendSorted = false;
+                break;
+            case "timeDescend":
+                if (!this.magAscendSorted)
+                    Collections.sort(listSeism, new Comparator<Seism>() {
+                        @Override
+                        public int compare(Seism o1, Seism o2) {
+                            int result = o1.getTime().before(o2.getTime()) ? 1 : o1.getTime().after(o2.getTime()) ? -1 : 0 ;
+                            return result;
+                        }
+                    });
+                Collections.reverse(listSeism);
+
+                this.timeAscendSorted = false;
+                this.magAscendSorted = false;
+                break;
+
         }
         this.seismAdapter.setListSeism(seismList);
         this.seismAdapter.notifyDataSetChanged();

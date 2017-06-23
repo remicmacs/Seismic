@@ -25,7 +25,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
 
     private URL url ;
-    private String address = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
+    private String address ;
     private Context context;
     private ArrayList<Seism> listSeism;
     private CustomAdapter seismAdapter;
@@ -33,11 +33,6 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
 
     @Override
     protected void onPreExecute() {
-        try{
-            this.url = new URL(this.address);
-        } catch (MalformedURLException err){
-            Log.d("Erreur ", err.getMessage()+"\n" + Arrays.toString(err.getStackTrace()));
-        }
         super.onPreExecute();
     }
 
@@ -47,6 +42,13 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
         listSeism = (ArrayList<Seism>) params[1];
         seismAdapter = (CustomAdapter) params[2];
         this.swipeRefreshLayoutFromMain = (SwipeRefreshLayout) params[3];
+        this.address = (String) params[4];
+
+        try{
+            this.url = new URL(this.address);
+        } catch (MalformedURLException err){
+            Log.d("Erreur ", err.getMessage()+"\n" + Arrays.toString(err.getStackTrace()));
+        }
 
         SeismsStream stream = null;
         try {
@@ -60,8 +62,11 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
             Log.d("Connexion", err.getMessage());
 
         }
-
-        listSeism = stream.getSeisms();
+        try{
+            listSeism = stream.getSeisms();
+        } catch (Exception err) {
+            Log.d("Parsing", err.getMessage() + "\n" + err.getStackTrace().toString());
+        }
         Collections.sort(listSeism);
         seismAdapter.setListSeism(listSeism);
         return stream;

@@ -10,12 +10,6 @@
     >
 
 
-    <!--- Transformer ce TextView en popup d'info -->
-    <!--<TextView
-        android:id="@+id/tvTest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/> -->
-
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainer"
