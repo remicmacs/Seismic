@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity
                 this.magAscendSorted = false;
                 break;
             case "timeAscend":
-                Collections.sort(listSeism, new Comparator<Seism>() {
+                Collections.sort(seismList, new Comparator<Seism>() {
                     @Override
                     public int compare(Seism o1, Seism o2) {
                         int result = o1.getTime().before(o2.getTime()) ? 1 : o1.getTime().after(o2.getTime()) ? -1 : 0 ;
@@ -214,14 +214,14 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "timeDescend":
                 if (!this.magAscendSorted)
-                    Collections.sort(listSeism, new Comparator<Seism>() {
+                    Collections.sort(seismList, new Comparator<Seism>() {
                         @Override
                         public int compare(Seism o1, Seism o2) {
                             int result = o1.getTime().before(o2.getTime()) ? 1 : o1.getTime().after(o2.getTime()) ? -1 : 0 ;
                             return result;
                         }
                     });
-                Collections.reverse(listSeism);
+                Collections.reverse(seismList);
 
                 this.timeAscendSorted = false;
                 this.magAscendSorted = false;
