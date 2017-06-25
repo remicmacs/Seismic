@@ -1,5 +1,6 @@
 package us.julesandremi.seismic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity
 
     private String defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
 
-    private List listSeism;
+    private List listSeism = null;
     private boolean magAscendSorted = false;
     private boolean timeAscendSorted = false;
     private boolean magSorted = false;
@@ -50,9 +51,16 @@ public class MainActivity extends AppCompatActivity
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        try{
+            Intent intent =  getIntent();
+            listSeism = (ArrayList<Seism>) intent.getSerializableExtra("list");
+        } catch (Exception err){
+            Log.d("Erreur", "Err");
+        }
+
         mListView = (ListView) findViewById(R.id.seism_list);
 
-        listSeism = new ArrayList<>();
+        if (listSeism == null) listSeism = new ArrayList<>();
         seismAdapter = new CustomAdapter(this, listSeism);
         mListView.setAdapter(seismAdapter);
         mListView.setOnItemClickListener(seismAdapter);
