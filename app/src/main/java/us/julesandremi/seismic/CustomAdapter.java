@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Jules on 09/06/2017.
  */
 
-class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+class CustomAdapter extends BaseAdapter implements AdapterView.OnItemLongClickListener , AdapterView.OnItemClickListener  {
 
     private Context context;
     private List listSeism;
@@ -83,13 +83,24 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListen
 
         Seism seism = (Seism) getItem(position);
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+        /* convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent afficherCarte = new Intent(context, FullscreenMapActivity.class);
+                Seism seism = (Seism) getItem(position);
+                URL url = seism.getUrl();
+                afficherCarte.putExtra("url", url.toString()+"#map");
+                context.startActivity(afficherCarte);
+            }
+        }); */
+
+        /*convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 displayDetail(position);
                 return false;
             }
-        });
+        }); */
 
         mViewHolder.textTitle.setText(seism.getTitle());
         mViewHolder.textLocation.setText(seism.getPlace());
@@ -98,7 +109,7 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListen
         return convertView;
     }
 
-    private void displayDetail(int position){
+    public void displayDetail(int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         //Log.d("Listener", "OnItemLongClick");
@@ -120,22 +131,33 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemClickListen
 
     }
 
-    private class MyViewHolder {
-        ImageView imageView;
-        TextView textTitle;
-        TextView textLocation;
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
 
-        Log.d("Listener", "OnItemClick");
+        //Log.d("Listener", "OnItemClick");
+        displayMap(position);
+    }
+
+    public void displayMap(int position) {
         Intent afficherCarte = new Intent(context, FullscreenMapActivity.class);
         Seism seism = (Seism) getItem(position);
         URL url = seism.getUrl();
         afficherCarte.putExtra("url", url.toString()+"#map");
         context.startActivity(afficherCarte);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        this.displayDetail(position);
+        return true;
+    }
+
+    private class MyViewHolder {
+        ImageView imageView;
+        TextView textTitle;
+        TextView textLocation;
+
     }
 
 }

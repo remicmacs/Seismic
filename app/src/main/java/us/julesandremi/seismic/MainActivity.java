@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
         seismAdapter = new CustomAdapter(this, listSeism);
         mListView.setAdapter(seismAdapter);
         mListView.setOnItemClickListener(seismAdapter);
+        mListView.setOnItemLongClickListener(seismAdapter);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
 
