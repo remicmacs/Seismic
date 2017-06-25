@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity
     private CustomAdapter seismAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton fab;
+    private Menu sortingMenu;
+    private MenuItem magSort;
 
 
     @Override
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -114,6 +115,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        this.sortingMenu = menu;
+        this.magSort = (MenuItem) menu.getItem(0);
+
+
+        magSort.setTitle(getResources().getString(R.string.action_sort_mag_descend));
+        magSort.setTitleCondensed(getResources().getString(R.string.action_sort_mag_descend_min));
+
         return true;
     }
 
@@ -125,9 +133,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.action_sort_mag) {
+         if (id == R.id.action_sort_mag) {
             if (this.magAscendSorted) {
                 this.sortSeisms("magDescend", item);
             } else {

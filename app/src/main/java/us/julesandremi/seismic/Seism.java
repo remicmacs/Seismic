@@ -12,8 +12,7 @@ import java.util.Objects;
 /**
  * Created by remicmacs on 07/06/17.
  * 
- * @// TODO: 08/06/17 Ajouter toString 
- * @// TODO: 08/06/17 Ajouter package model avec CoordinatesPoint, Seism, SeismsStream 
+ * @// TODO: 08/06/17 Ajouter package model avec CoordinatesPoint, Seism, SeismsStream
  */
 
 public class Seism implements Serializable, Comparable<Seism> {
