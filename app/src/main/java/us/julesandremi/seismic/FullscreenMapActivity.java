@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
