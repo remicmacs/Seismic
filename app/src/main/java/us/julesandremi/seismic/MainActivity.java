@@ -149,19 +149,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        } else if (id == R.id.source_all) {
+        if (id == R.id.source_all) {
             this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
             // Changer les titres intitulés ou symboles pour la lisibilité de la source utilisée
             this.asyncJson();
@@ -170,6 +158,13 @@ public class MainActivity extends AppCompatActivity
             this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson";
             // Changer les titres intitulés ou symboles pour la lisibilité de la source utilisée
             this.asyncJson();
+        } else if (id == R.id.source_big) {
+            this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
+            this.asyncJson();
+        } else if (id == R.id.source_significant){
+            this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson";
+            this.asyncJson();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

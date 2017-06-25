@@ -79,7 +79,7 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
             seismAdapter.notifyDataSetChanged();
             swipeRefreshLayoutFromMain.setRefreshing(false);
         } catch (Exception err){
-            Log.d("Erreur", Arrays.toString(err.getStackTrace()));
+            Log.d("Erreur on Post", Arrays.toString(err.getStackTrace()));
         }
     }
 }

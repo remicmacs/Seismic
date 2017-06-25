@@ -85,7 +85,6 @@ public class JsonParser  {
             throw new JSONException("Erreur de parsing");
         } finally {
             try {
-
                 this.reader.close();
             } catch (Exception err){
                 Log.d("Erreur", "parsing JSON error : closing point : " + Arrays.toString(err.getStackTrace()));
@@ -148,7 +147,12 @@ public class JsonParser  {
                         String internalPropertiesName = reader.nextName();
                         switch (internalPropertiesName){
                             case "mag" :
-                                mag = (float) reader.nextDouble();
+                                try {
+                                    mag = (float) reader.nextDouble();
+                                } catch (IllegalStateException err){
+                                    mag = 0.f;
+                                    reader.skipValue();
+                                }
                                 break;
                             case "place" :
                                 place = reader.nextString();

@@ -23,6 +23,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_renew" />
+        app:srcCompat="@drawable/ic_location_on_map" />
 
 </android.support.design.widget.CoordinatorLayout>
