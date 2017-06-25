@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +75,8 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemLongClickLi
                     .findViewById(R.id.seism_title);
             mViewHolder.textLocation = (TextView) convertView
                     .findViewById(R.id.seism_location);
-            mViewHolder.imageView = (ImageView) convertView
-                    .findViewById(R.id.seism_intensity_icon);
+            mViewHolder.textIntensity = (TextView) convertView
+                    .findViewById(R.id.seism_intensity_number);
 
             convertView.setTag(mViewHolder);
         } else {
@@ -104,7 +106,18 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemLongClickLi
 
         mViewHolder.textTitle.setText(seism.getTitle());
         mViewHolder.textLocation.setText(seism.getPlace());
-        mViewHolder.imageView.setImageResource(R.drawable.ic_tsunami);
+        DecimalFormat df = new DecimalFormat("#.#");
+        float mag = (seism.getMag());
+        mViewHolder.textIntensity.setText(df.format(mag));
+        String hexColor = "#FFFE9F";
+        if (mag >= 3 && mag < 6) {
+            hexColor = "#FFD480";
+        } else if (mag >= 6 && mag < 9){
+            hexColor = "#FCA180";
+        } else if (mag >=9){
+            hexColor = "#F56262";
+        }
+        mViewHolder.textIntensity.setTextColor(Color.parseColor(hexColor));
 
         return convertView;
     }
@@ -154,7 +167,8 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemLongClickLi
     }
 
     private class MyViewHolder {
-        ImageView imageView;
+        //ImageView imageView;
+        TextView textIntensity;
         TextView textTitle;
         TextView textLocation;
 
