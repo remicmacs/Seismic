@@ -21,4 +21,7 @@
     <string name="action_sort_mag_descend_min">Trier par mag. déc.</string>
     <string name="action_sort_time_desc">Trier par date décroissante</string>
     <string name="action_sort_time_desc_min">Trier par date déc.</string>
+    <string name="fetch_from_medium">Moyens séismes</string>
+    <string name="fetch_big_seisms">Gros séismes</string>
+    <string name="fetch_significant_seisms">Séismes importants</string>
 </resources>

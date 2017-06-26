@@ -3,14 +3,12 @@
 
     <item android:title="Sources">
         <menu>
-            <item android:id="@+id/source_all" android:icon="@drawable/ic_cracked_ground"
-                android:title="Fetch all" />
             <item android:id="@+id/source_medium" android:icon="@drawable/ic_cracked_ground"
-                android:title="Fetch from medium" />
+                android:title="@string/fetch_from_medium" />
             <item android:id="@+id/source_big" android:icon="@drawable/ic_cracked_ground"
-                android:title="Fetch big seisms" />
+                android:title="@string/fetch_big_seisms" />
             <item android:id="@+id/source_significant" android:icon="@drawable/ic_cracked_ground"
-                android:title="Fetch significant seisms" />
+                android:title="@string/fetch_significant_seisms" />
         </menu>
     </item>
 

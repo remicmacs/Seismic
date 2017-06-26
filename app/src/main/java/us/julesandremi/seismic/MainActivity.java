@@ -170,12 +170,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.source_all) {
-            this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
-            // Changer les titres intitulés ou symboles pour la lisibilité de la source utilisée
-            this.asyncJson();
-
-        } else if (id == R.id.source_medium) {
+         if (id == R.id.source_medium) {
             this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson";
             // Changer les titres intitulés ou symboles pour la lisibilité de la source utilisée
             this.asyncJson();

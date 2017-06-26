@@ -20,4 +20,7 @@
     <string name="action_sort_mag_descend_min">Sort by mag. desc.</string>
     <string name="action_sort_time_desc">Sort by date descending</string>
     <string name="action_sort_time_desc_min">Sort by date desc.</string>
+    <string name="fetch_from_medium">Fetch from medium</string>
+    <string name="fetch_big_seisms">Fetch big seisms</string>
+    <string name="fetch_significant_seisms">Fetch significant seisms</string>
 </resources>
