@@ -1,15 +1,11 @@
 package us.julesandremi.seismic;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Created by remicmacs on 07/06/17.

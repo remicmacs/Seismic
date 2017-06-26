@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity
     private CustomAdapter seismAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton fab;
-    private Menu sortingMenu;
     private MenuItem magSort;
 
 
@@ -131,8 +130,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        this.sortingMenu = menu;
-        this.magSort = (MenuItem) menu.getItem(0);
+        this.magSort = menu.getItem(0);
 
 
         magSort.setTitle(getResources().getString(R.string.action_sort_mag_descend));
@@ -201,12 +199,13 @@ public class MainActivity extends AppCompatActivity
 
         switch (key){
             case "magAscend":
-                Collections.sort(seismList);
-                item.setTitle(getResources().getString(R.string.action_sort_mag_descend));
-                item.setTitleCondensed(getResources().getString(R.string.action_sort_mag_descend_min));
-                this.magAscendSorted = true;
-                this.magSorted = true;
-
+                if (!(this.magSorted && this.magAscendSorted)) {
+                    Collections.sort(seismList);
+                    item.setTitle(getResources().getString(R.string.action_sort_mag_descend));
+                    item.setTitleCondensed(getResources().getString(R.string.action_sort_mag_descend_min));
+                    this.magAscendSorted = true;
+                    this.magSorted = true;
+                }
                 break;
             case "magDescend":
                 if (! this.magAscendSorted) Collections.sort(seismList);
@@ -217,17 +216,19 @@ public class MainActivity extends AppCompatActivity
                 this.magSorted = true;
                 break;
             case "timeAscend":
-                Collections.sort(seismList, new Comparator<Seism>() {
-                    @Override
-                    public int compare(Seism o1, Seism o2) {
-                        int result = o1.getTime().before(o2.getTime()) ? 1 : o1.getTime().after(o2.getTime()) ? -1 : 0 ;
-                        return result;
+                if (!(!this.magSorted && this.timeAscendSorted)) {
+                    Collections.sort(seismList, new Comparator<Seism>() {
+                        @Override
+                        public int compare(Seism o1, Seism o2) {
+                            int result = o1.getTime().before(o2.getTime()) ? 1 : o1.getTime().after(o2.getTime()) ? -1 : 0;
+                            return result;
                         }
                     });
-                this.timeAscendSorted = true;
-                this.magSorted = false;
-                item.setTitle(getResources().getString(R.string.action_sort_time_desc));
-                item.setTitleCondensed(getResources().getString(R.string.action_sort_time_desc_min));
+                    this.timeAscendSorted = true;
+                    this.magSorted = false;
+                    item.setTitle(getResources().getString(R.string.action_sort_time_desc));
+                    item.setTitleCondensed(getResources().getString(R.string.action_sort_time_desc_min));
+                }
                 break;
             case "timeDescend":
                 if (!this.timeAscendSorted) {

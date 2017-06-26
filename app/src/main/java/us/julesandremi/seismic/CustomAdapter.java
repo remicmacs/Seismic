@@ -29,10 +29,10 @@ import java.util.List;
 class CustomAdapter extends BaseAdapter implements AdapterView.OnItemLongClickListener , AdapterView.OnItemClickListener  {
 
     private Context context;
-    private List listSeism;
+    private ArrayList<Seism> listSeism;
 
     public CustomAdapter(Context context, List listSeism) {
-        this.listSeism = listSeism;
+        this.listSeism = (ArrayList<Seism>) listSeism;
         this.context = context;
     }
 
@@ -42,10 +42,10 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemLongClickLi
     }
 
     public void setListSeism(List listSeism) {
-        this.listSeism = listSeism;
+        this.listSeism = (ArrayList<Seism>)listSeism;
     }
 
-    public List <Seism> getListSeism(){
+    public ArrayList <Seism> getListSeism(){
         return this.listSeism;
     }
 
@@ -84,25 +84,6 @@ class CustomAdapter extends BaseAdapter implements AdapterView.OnItemLongClickLi
         }
 
         Seism seism = (Seism) getItem(position);
-
-        /* convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent afficherCarte = new Intent(context, FullscreenMapActivity.class);
-                Seism seism = (Seism) getItem(position);
-                URL url = seism.getUrl();
-                afficherCarte.putExtra("url", url.toString()+"#map");
-                context.startActivity(afficherCarte);
-            }
-        }); */
-
-        /*convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                displayDetail(position);
-                return false;
-            }
-        }); */
 
         mViewHolder.textTitle.setText(seism.getTitle());
         mViewHolder.textLocation.setText(seism.getPlace());

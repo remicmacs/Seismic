@@ -165,7 +165,7 @@ public class JsonParser  {
                                 title = reader.nextString();
                                 break;
                             case "tsunami" :
-                                tsunami = (reader.nextInt() == 1 ? true : false);
+                                tsunami = (reader.nextInt() == 1);
                                 break;
                             case "url" :
                                 url = reader.nextString();

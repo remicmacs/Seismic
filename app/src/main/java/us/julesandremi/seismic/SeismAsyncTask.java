@@ -5,16 +5,12 @@ import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.StringTokenizer;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -65,7 +61,7 @@ public class SeismAsyncTask extends AsyncTask<Object, Void, SeismsStream>  {
         try{
             listSeism = stream.getSeisms();
         } catch (Exception err) {
-            Log.d("Parsing", err.getMessage() + "\n" + err.getStackTrace().toString());
+            Log.d("Parsing", err.getMessage() + "\n" + Arrays.toString(err.getStackTrace()));
         }
         Collections.sort(listSeism);
         seismAdapter.setListSeism(listSeism);
