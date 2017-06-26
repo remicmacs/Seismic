@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent afficherCarteComplete = new Intent(MainActivity.this, CompleteMapActivity.class);
+                afficherCarteComplete.putExtra("list", (Serializable) MainActivity.this.seismAdapter.getListSeism());
                 MainActivity.this.startActivity(afficherCarteComplete);
             }
         });
@@ -170,15 +172,6 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_map) {
-            Log.d("Map", "Hello");
-            Intent afficherCarteComplete = new Intent(MainActivity.this, CompleteMapActivity.class);
-            try{
-                this.startActivity(afficherCarteComplete);
-            } catch (Exception err){
-                Log.d("Map", err.getMessage());
-            }
-        } else if (id == R.id.source_all) {
         if (id == R.id.source_all) {
             this.defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
             // Changer les titres intitulés ou symboles pour la lisibilité de la source utilisée

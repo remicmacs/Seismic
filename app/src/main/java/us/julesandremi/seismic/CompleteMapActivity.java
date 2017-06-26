@@ -12,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -20,10 +21,10 @@ import java.util.List;
 
 public class CompleteMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private String defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
+    //private String defaultAddress = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
 
-    private List listSeism = null;
-    private CustomAdapter seismAdapter;
+    private ArrayList<Seism> listSeism = null;
+    //private CustomAdapter seismAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,31 +39,43 @@ public class CompleteMapActivity extends AppCompatActivity implements OnMapReady
             Intent intent =  getIntent();
             listSeism = (ArrayList<Seism>) intent.getSerializableExtra("list");
         } catch (Exception err){
-            Log.d("Erreur", "Err");
+            Log.d("Erreur", "Erreur de désérialisation");
         }
         if (listSeism == null) listSeism = new ArrayList<>();
-        seismAdapter = new CustomAdapter(this, listSeism);
-        this.asyncJson();
+
+        /* On va pas appeler une tâche asynchrone dans une autre alors qu'on a déjà ramené toute la data nécessaire */
+        //seismAdapter = new CustomAdapter(this, listSeism);
+        //this.asyncJson();
 
     }
 
-    private void asyncJson() {
+    /*private void asyncJson() {
         this.asyncJson(this.defaultAddress);
     }
 
     private void asyncJson(String url){
         new SeismAsyncTask().execute(this, this.listSeism, this.seismAdapter, null, url);
-    }
+    }*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        ArrayList <Seism> seismList = (ArrayList) this.seismAdapter.getListSeism();
-        for(Seism seisme : seismList) {
-            googleMap.addMarker(new MarkerOptions()
+        //ArrayList <Seism> seismList = this.listSeism;
+        for(Seism seisme : this.listSeism) {
+            float mag = seisme.getMag();
+            float hue = 59.f;
+            if (mag >= 3 && mag < 6) {
+                hue = 45.f;
+            } else if (mag >= 6 && mag < 9){
+                hue = 20.f;
+            } else if (mag >=9){
+                hue = 0.f;
+            }
+            googleMap.addMarker(
+                    new MarkerOptions()
                     .position(new LatLng(seisme.getCoordinates().getLatitude(), seisme.getCoordinates().getLongitude()))
-                    .title(seisme.getTitle()));
+                    .title(seisme.getTitle())
+                            .icon(BitmapDescriptorFactory.defaultMarker(hue)));
         }
-
     }
 }
