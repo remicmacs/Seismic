@@ -1,5 +1,7 @@
 package us.julesandremi.seismic;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
@@ -142,4 +144,5 @@ public class Seism implements Serializable, Comparable<Seism> {
     public String toString() {
         return this.getTitle()+" Date : "+(new Date(this.getTime().getTime()));
     }
+
 }
